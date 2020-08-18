@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import NewPuppy from "./NewPuppy";
-
+//todo pawprint as icon/on home page
 export default function LitterForm() {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (litterData) => {
+    litterData.puppies = puppies;
     console.log("litter submit", litterData);
   };
-  const [puppyId, setPuppyId] = useState(0);
   const [puppies, setPuppies] = useState([]);
+  const [puppyId, setPuppyId] = useState(0);
   const [newPuppyForm, setNewPuppyForm] = useState(false);
-
-  console.log(watch("litterDate")); // watch input value by passing the name of it
   // todo add in error messages (all at top?)
   return (
     <div>
@@ -35,7 +34,7 @@ export default function LitterForm() {
               placeholder="Dam"
               type="text"
               list="dams"
-              ref={register({ required: true })}
+              ref={register({ required: false })}
             />
             {
               //todo datalist populate from past entries
@@ -55,7 +54,7 @@ export default function LitterForm() {
               placeholder="Sire"
               type="text"
               list="sires"
-              ref={register({ required: true })}
+              ref={register({ required: false })}
             />
             <datalist id="sires">
               <option>Rodeo</option>
@@ -70,31 +69,31 @@ export default function LitterForm() {
             Breed Date:{" "}
             <input
               name="breedDate"
-              placeholder="Breed Date"
-              ref={register({ required: true })}
+              type="date"
+              ref={register({ required: false })}
             />
           </label>
-          <p>Expected Date: 63days</p>
+          <p>Expected Date: {ExpectedDate("breedDate", 63)}</p>
           <label>
             Litter Date:{" "}
             <input
               name="litterDate"
-              placeholder="Litter Date"
-              ref={register({ required: true })}
+              type="date"
+              ref={register({ required: false })}
             />
-            <p>New Home: 8wks</p>
+            <p>New Home: 8wks {ExpectedDate("litterDate", 56)}</p>
           </label>
         </div>
-        <button
-          onClick={() => {
-            setPuppyId(puppyId + 1);
-            setNewPuppyForm(true);
-          }}
-        >
-          Add Puppy
-        </button>
         <input type="submit" />
       </form>
+      <button
+        onClick={() => {
+          setPuppyId(puppyId + 1);
+          setNewPuppyForm(true);
+        }}
+      >
+        Add Puppy
+      </button>
       {newPuppyForm && (
         <NewPuppy
           puppyId={puppyId}
@@ -105,12 +104,17 @@ export default function LitterForm() {
       )}
     </div>
   );
-}
 
-// <input type="text" list="cars" />
-//             <datalist id="cars">
-//               <option>Volvo</option>
-//               <option>Saab</option>
-//               <option>Mercedes</option>
-//               <option>Audi</option>
-//             </datalist>
+  function ExpectedDate(dateFrom, days) {
+    if (watch(dateFrom)) {
+      const baseDate = watch(dateFrom).split("-");
+      let date = new Date(baseDate[0], --baseDate[1], baseDate[2]);
+      let expectedDate = new Date();
+      expectedDate.setDate(date.getDate() + days);
+      expectedDate = expectedDate.toISOString().slice(0, 10);
+      // console.log({ baseDate, date, expectedDate });
+      return expectedDate;
+    }
+    return "N/A";
+  }
+}

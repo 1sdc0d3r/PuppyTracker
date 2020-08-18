@@ -8,9 +8,10 @@ export default function NewPuppy({
   setNewPuppyForm,
 }) {
   const { register, handleSubmit, watch, errors } = useForm();
-  const onSubmit = (newPuppyData) => {
-    console.log("NEW PUPPY SUBMIT", newPuppyData);
-    setPuppies([...puppies, newPuppyData]);
+  const onSubmit = (puppyData) => {
+    console.log("NEW PUPPY SUBMIT", puppyData);
+    puppyData.commission = CommissionRate();
+    setPuppies([...puppies, puppyData]);
     setNewPuppyForm(false);
   };
   return (
@@ -34,7 +35,11 @@ export default function NewPuppy({
           type="text"
           ref={register()}
         />
-        <select name="gender" default="male" ref={register({ required: true })}>
+        <select
+          name="gender"
+          default="male"
+          ref={register({ required: false })}
+        >
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
@@ -47,7 +52,7 @@ export default function NewPuppy({
           placeholder="markings"
           type="text"
           list="markings"
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
         <datalist id="markings">
           <option>Cream</option>
@@ -65,7 +70,7 @@ export default function NewPuppy({
             name="firstName"
             placeholder="First Name"
             type="text"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
         </label>
         <label>
@@ -74,7 +79,7 @@ export default function NewPuppy({
             name="lastName"
             placeholder="Last Name"
             type="text"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
         </label>
         <label>
@@ -83,7 +88,7 @@ export default function NewPuppy({
             name="address"
             placeholder="Address"
             type="text"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
         </label>
       </div>
@@ -93,7 +98,7 @@ export default function NewPuppy({
           name="price"
           placeholder="$$"
           type="text"
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
       </label>
       {/* //todo validate number  */}
@@ -104,7 +109,7 @@ export default function NewPuppy({
             name="paymentValue"
             type="text"
             placeholder="$"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
         </label>
         <label>
@@ -114,7 +119,7 @@ export default function NewPuppy({
             type="text"
             list="paymentType"
             default="cash"
-            ref={register({ required: true })}
+            ref={register({ required: false })}
           />
           <datalist id="paymentType">
             <option>Cash</option>
@@ -131,7 +136,7 @@ export default function NewPuppy({
           name="fees"
           type="text"
           placeholder="$"
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
       </label>
       <label>
@@ -140,7 +145,7 @@ export default function NewPuppy({
           name="sellerPayment"
           type="text"
           placeholder="$"
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
       </label>
       <label>
@@ -148,8 +153,7 @@ export default function NewPuppy({
         <input
           name="commission"
           type="text"
-          default={CommissionRate()} //todo pass in price field
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
       </label>
       <label>
@@ -158,7 +162,7 @@ export default function NewPuppy({
           name="akcRegistered"
           type="checkbox"
           default={false}
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
       </label>
       <label>
@@ -167,10 +171,10 @@ export default function NewPuppy({
           name="listed"
           type="checkbox"
           default={false}
-          ref={register({ required: true })}
+          ref={register({ required: false })}
         />
       </label>
-      <input type="submit">Submit Puppy!</input>
+      <input type="submit" value="Submit Puppy!" />
     </form>
   );
 
@@ -179,7 +183,6 @@ export default function NewPuppy({
     // "800-1599": "15%",
     // "1600": "20%"
     const price = watch("price");
-    console.log("PRICE", price);
     if (!price) return 0;
 
     if (price < 799) {
