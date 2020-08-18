@@ -4,18 +4,20 @@ import NewPuppy from "./NewPuppy";
 
 export default function LitterForm() {
   const { register, handleSubmit, watch, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (litterData) => {
+    console.log("litter submit", litterData);
+  };
   const [puppyId, setPuppyId] = useState(0);
+  const [puppies, setPuppies] = useState([]);
+  const [newPuppyForm, setNewPuppyForm] = useState(false);
 
   console.log(watch("litterDate")); // watch input value by passing the name of it
   // todo add in error messages (all at top?)
   return (
-    <>
-      <h2>Litter Info</h2>
+    <div>
       {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="litterInfo">
-          {/* register your input into the hook by invoking the "register" function */}
           <label>
             Owner's Name:{" "}
             <input
@@ -83,17 +85,25 @@ export default function LitterForm() {
             <p>New Home: 8wks</p>
           </label>
         </div>
-        {/* <button
+        <button
           onClick={() => {
             setPuppyId(puppyId + 1);
-            NewPuppy(puppyId);
+            setNewPuppyForm(true);
           }}
         >
           Add Puppy
-        </button> */}
+        </button>
         <input type="submit" />
       </form>
-    </>
+      {newPuppyForm && (
+        <NewPuppy
+          puppyId={puppyId}
+          puppies={puppies}
+          setPuppies={setPuppies}
+          setNewPuppyForm={setNewPuppyForm}
+        />
+      )}
+    </div>
   );
 }
 
