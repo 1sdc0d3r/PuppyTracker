@@ -1,0 +1,41 @@
+{
+  "name": "puppy-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.10",
+    "pg": "^7.18.2",
+    "sqlite3": "^4.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1sdc0d3r/PuppyTracker.git"
+  },
+  "author": "1sdc0d3r",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1sdc0d3r/PuppyTracker/issues"
+  },
+  "homepage": "https://github.com/1sdc0d3r/PuppyTracker#readme"
+}
