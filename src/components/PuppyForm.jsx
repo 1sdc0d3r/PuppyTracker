@@ -5,14 +5,15 @@ export default function NewPuppy({
   puppyId,
   puppies,
   setPuppies,
-  setNewPuppyForm,
+  setPuppyForm,
 }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (puppyData) => {
     console.log("NEW PUPPY SUBMIT", puppyData);
+    puppyData.id = puppyId;
     puppyData.commission = CommissionRate();
     setPuppies([...puppies, puppyData]);
-    setNewPuppyForm(false);
+    setPuppyForm(false);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +48,7 @@ export default function NewPuppy({
       <label>
         Markings:{" "}
         <input
-          // todo choose multiple markings
+          // todo choose multiple markings array
           name="markings"
           placeholder="markings"
           type="text"
@@ -78,6 +79,15 @@ export default function NewPuppy({
           <input
             name="lastName"
             placeholder="Last Name"
+            type="text"
+            ref={register({ required: false })}
+          />
+        </label>
+        <label>
+          Phone:{" "}
+          <input
+            name="phone"
+            placeholder="Phone #"
             type="text"
             ref={register({ required: false })}
           />
@@ -145,14 +155,6 @@ export default function NewPuppy({
           name="sellerPayment"
           type="text"
           placeholder="$"
-          ref={register({ required: false })}
-        />
-      </label>
-      <label>
-        Commission:{" "}
-        <input
-          name="commission"
-          type="text"
           ref={register({ required: false })}
         />
       </label>
