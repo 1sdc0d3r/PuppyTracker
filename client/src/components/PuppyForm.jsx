@@ -18,9 +18,9 @@ export default function NewPuppy({
     if (editingPuppy) {
       console.log("EDIT PUPPY");
       RemovePuppy(editingPuppy.id);
-      setEditingPuppy(false);
     }
     setPuppies([...puppies, puppyData]);
+    setEditingPuppy(false);
     setPuppyForm(false);
   };
   const {

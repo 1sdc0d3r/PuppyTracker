@@ -152,8 +152,7 @@ export default function LitterForm() {
               <th>name</th>
               <th>sex</th>
               <th>markings</th>
-              <th>firstName</th>
-              <th>lastName</th>
+              <th>Name</th>
               <th>phone</th>
               <th>price</th>
               <th>paymentValue</th>
@@ -193,8 +192,9 @@ export default function LitterForm() {
                     <td>{name}</td>
                     <td>{sex}</td>
                     <td>{markings}</td>
-                    <td>{firstName}</td>
-                    <td>{lastName}</td>
+                    <td>
+                      {firstName} {lastName}
+                    </td>
                     <td>{phone}</td>
                     <td>{price}</td>
                     <td>{paymentValue}</td>
