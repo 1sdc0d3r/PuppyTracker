@@ -1,0 +1,52 @@
+.litter-form form {
+  width: 90%;
+  border: 2px solid black;
+  margin: 1em auto;
+}
+
+.litter-form form .litter-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.litter-form form .litter-info .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1em;
+  width: 100%;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.litter-form form .litter-info .row .date {
+  border: 1px solid black;
+}
+
+.litter-form form .litter-info .row .date p {
+  margin: 0.125em auto;
+}
+
+.litter-form form .puppies {
+  border: 2px solid black;
+  margin: 1em auto;
+}
+
+.litter-form form .puppies thead {
+  background: #666;
+  color: white;
+}
+
+.litter-form form .puppy-form {
+  border: 2px solid red;
+}
+/*# sourceMappingURL=LitterForm.css.map */

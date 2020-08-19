@@ -2,22 +2,48 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export default function NewPuppy({
-  puppyId,
+  newPuppyId,
   puppies,
   setPuppies,
   setPuppyForm,
+  editingPuppy,
+  setEditingPuppy,
+  RemovePuppy,
 }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (puppyData) => {
-    console.log("NEW PUPPY SUBMIT", puppyData);
-    puppyData.id = puppyId;
     puppyData.commission = CommissionRate();
+    puppyData.id = editingPuppy ? editingPuppy.id : newPuppyId;
+    if (editingPuppy) {
+      console.log("EDIT PUPPY");
+      RemovePuppy(editingPuppy.id);
+      setEditingPuppy(false);
+    }
     setPuppies([...puppies, puppyData]);
     setPuppyForm(false);
   };
+  const {
+    id,
+    address,
+    akcRegistered,
+    commission,
+    fees,
+    firstName,
+    gender,
+    lastName,
+    listed,
+    markings,
+    microchipId,
+    name,
+    paymentType,
+    paymentValue,
+    phone,
+    price,
+    sellerPayment,
+  } = editingPuppy;
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <p className="id">{puppyId}</p>
+    <form className="puppy-form" onSubmit={handleSubmit(onSubmit)}>
+      <p className="id">{id ? id : newPuppyId}</p>
       {/*//todo upload <img />*/}
       <label>
         Name:{" "}
@@ -25,6 +51,7 @@ export default function NewPuppy({
           name="name"
           placeholder="Puppy Name"
           type="text"
+          defaultValue={name ? name : ""}
           ref={register()}
         />
       </label>
@@ -34,15 +61,16 @@ export default function NewPuppy({
           name="microchipId"
           placeholder="#######"
           type="text"
+          defaultValue={microchipId ? microchipId : ""}
           ref={register()}
         />
         <select
           name="gender"
-          default="male"
+          defaultValue={gender ? gender : "M"}
           ref={register({ required: false })}
         >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
         </select>
       </label>
       <label>
@@ -51,6 +79,7 @@ export default function NewPuppy({
           // todo choose multiple markings array
           name="markings"
           placeholder="markings"
+          defaultValue={markings ? markings : ""}
           type="text"
           list="markings"
           ref={register({ required: false })}
@@ -70,6 +99,7 @@ export default function NewPuppy({
           <input
             name="firstName"
             placeholder="First Name"
+            defaultValue={firstName ? firstName : ""}
             type="text"
             ref={register({ required: false })}
           />
@@ -79,6 +109,7 @@ export default function NewPuppy({
           <input
             name="lastName"
             placeholder="Last Name"
+            defaultValue={lastName ? lastName : ""}
             type="text"
             ref={register({ required: false })}
           />
@@ -88,15 +119,17 @@ export default function NewPuppy({
           <input
             name="phone"
             placeholder="Phone #"
+            defaultValue={phone ? phone : ""}
             type="text"
             ref={register({ required: false })}
           />
         </label>
         <label>
-          Address:{" "}
+          Address: {/* //todo split this into further breakdown */}
           <input
             name="address"
             placeholder="Address"
+            defaultValue={address ? address : ""}
             type="text"
             ref={register({ required: false })}
           />
@@ -107,6 +140,7 @@ export default function NewPuppy({
         <input
           name="price"
           placeholder="$$"
+          defaultValue={price ? price : ""}
           type="text"
           ref={register({ required: false })}
         />
@@ -118,6 +152,7 @@ export default function NewPuppy({
           <input
             name="paymentValue"
             type="text"
+            defaultValue={paymentValue ? paymentValue : ""}
             placeholder="$"
             ref={register({ required: false })}
           />
@@ -128,7 +163,8 @@ export default function NewPuppy({
             name="paymentType"
             type="text"
             list="paymentType"
-            default="cash"
+            defaultValue={paymentType ? paymentType : "Cash"}
+            // default="cash"
             ref={register({ required: false })}
           />
           <datalist id="paymentType">
@@ -136,7 +172,7 @@ export default function NewPuppy({
             <option>Check</option>
             <option>Card</option>
             <option>Venmo</option>
-            <option>Paypal</option>
+            <option>PayPal</option>
           </datalist>
         </label>
       </div>
@@ -146,6 +182,7 @@ export default function NewPuppy({
           name="fees"
           type="text"
           placeholder="$"
+          defaultValue={fees ? fees : ""}
           ref={register({ required: false })}
         />
       </label>
@@ -154,6 +191,7 @@ export default function NewPuppy({
         <input
           name="sellerPayment"
           type="text"
+          defaultValue={sellerPayment ? sellerPayment : ""}
           placeholder="$"
           ref={register({ required: false })}
         />
@@ -163,7 +201,7 @@ export default function NewPuppy({
         <input
           name="akcRegistered"
           type="checkbox"
-          default={false}
+          defaultValue={akcRegistered ? firstName : false}
           ref={register({ required: false })}
         />
       </label>
@@ -172,11 +210,16 @@ export default function NewPuppy({
         <input
           name="listed"
           type="checkbox"
-          default={false}
+          defaultValue={listed ? listed : false}
           ref={register({ required: false })}
         />
       </label>
-      <input type="submit" value="Submit Puppy!" />
+      <div className="actions">
+        {editingPuppy && (
+          <button onClick={() => RemovePuppy(editingPuppy.id)}>Delete</button>
+        )}
+        <input type="submit" value="Submit Puppy!" />
+      </div>
     </form>
   );
 
