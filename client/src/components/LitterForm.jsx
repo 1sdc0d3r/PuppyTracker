@@ -7,6 +7,7 @@ export default function LitterForm() {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (litterData) => {
     litterData.puppies = puppies;
+    // todo set date in correct format
     console.log("litter submit", litterData);
   };
   const [puppies, setPuppies] = useState([
@@ -179,7 +180,6 @@ export default function LitterForm() {
                   lastName,
                   listed,
                   markings,
-                  microchipId,
                   name,
                   phone,
                   paymentType,
