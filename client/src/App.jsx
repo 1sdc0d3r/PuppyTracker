@@ -10,7 +10,7 @@ function App() {
       <h1> Puppy Tracker </h1>
       <Switch>
         {/* //todo path to /litter */}
-        <Route path="/" component={LitterForm} />
+        <Route path="/" component={LitterForm} exact />
         <Route path="/puppy" component={PuppyForm} />
       </Switch>
     </div>

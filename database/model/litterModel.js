@@ -4,6 +4,7 @@ module.exports = {
     insert,
     getLitters,
     getLitterById,
+    getPuppies,
     modifyLitter,
     removeLitter,
     truncate
@@ -28,6 +29,13 @@ function getLitterById(id) {
             id
         })
         .first();
+}
+
+function getPuppies(litter_id) {
+    return db("Puppy")
+        .where({
+            litter_id
+        }).orderBy("id")
 }
 
 function modifyLitter(id, litter) {

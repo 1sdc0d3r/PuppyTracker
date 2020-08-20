@@ -40,6 +40,11 @@ router.get("/:id", (req, res) => {
     litterDb.getLitterById(id).then(litter => res.status(201).json(litter)).catch(err => res.status(500).json(err))
 })
 
+router.get("/:id/puppies", (req, res) => {
+    const id = req.params.id
+    litterDb.getPuppies(id).then(puppies => res.status(201).json(puppies)).catch(err => res.status(500).json(err))
+})
+
 router.put("/:id", (req, res) => {
     const id = req.params.id
     const litter = req.body

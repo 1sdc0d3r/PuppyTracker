@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import PuppyForm from "./PuppyForm";
 import "../style/LitterForm/LitterForm.css";
 import { postLitter } from "../utils/serverRequests";
+import axios from "axios";
+
 export default function LitterForm() {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (litterData) => {
@@ -12,27 +14,8 @@ export default function LitterForm() {
     postLitter(litterData);
   };
   // todo # of puppies/litter
-  const [puppies, setPuppies] = useState([
-    {
-      id: 1,
-      address: "2020 S 5040 E, South Jordan ut 84402",
-      akcRegistered: false,
-      commission: 200,
-      fees: 80,
-      firstName: "Jack",
-      sex: "M",
-      lastName: "Barry",
-      listed: false,
-      markings: "Chocolate, Dapple",
-      microchipId: 3020384,
-      name: "Red",
-      paymentType: "Cash",
-      paymentValue: 300,
-      phone: "801-391-3949",
-      price: 500,
-      sellerPayment: 30,
-    },
-  ]);
+  const api_url = "http://localhost:5000/api";
+  const [puppies, setPuppies] = useState([]);
   const [newPuppyId, setNewPuppyId] = useState(0);
   const [puppyForm, setPuppyForm] = useState(false);
   const [editingPuppy, setEditingPuppy] = useState(false);
@@ -41,7 +24,14 @@ export default function LitterForm() {
     expectedDate: expectedDateHandler("breedDate", 63),
     newHomeDate: "",
   });
-  console.log({ litterFormData });
+  useEffect(() => {
+    const id = 1;
+    axios
+      .get(`${api_url}/litter/${id}/puppies`)
+      .then((res) => setPuppies(res.data))
+      .catch((err) => console.log(err.response.data));
+  }, []);
+
   return puppyForm ? (
     <PuppyForm
       newPuppyId={newPuppyId}
