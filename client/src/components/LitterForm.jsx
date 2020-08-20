@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import PuppyForm from "./PuppyForm";
 import "../style/LitterForm/LitterForm.css";
-import { postLitter } from "../utils/serverRequests";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
+const api_url = "http://localhost:5000/api";
 
-export default function LitterForm() {
+export default withRouter(function LitterForm({ history }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (litterData) => {
     // litterData.puppies = puppies;
     // todo set date in correct format
     console.log("litter submit", litterData);
-    postLitter(litterData);
+    axios
+      .post(`${api_url}/litter`, litterData)
+      .then((res) => history.push("/puppy", { litterId: res.data }))
+      .catch((err) => console.log(err.response.data.message));
   };
   // todo # of puppies/litter
-  const api_url = "http://localhost:5000/api";
   const [puppies, setPuppies] = useState([]);
-  const [newPuppyId, setNewPuppyId] = useState(0);
-  const [puppyForm, setPuppyForm] = useState(false);
-  const [editingPuppy, setEditingPuppy] = useState(false);
+  // const [newPuppyId, setNewPuppyId] = useState(0);
+  // const [puppyForm, setPuppyForm] = useState(false);
+  // const [editingPuppy, setEditingPuppy] = useState(false);
   // todo add in error messages (all at top?)
   const [litterFormData, setLitterFormData] = useState({
     expectedDate: expectedDateHandler("breedDate", 63),
@@ -32,21 +34,22 @@ export default function LitterForm() {
       .catch((err) => console.log(err.response.data));
   }, []);
 
-  return puppyForm ? (
-    <PuppyForm
-      newPuppyId={newPuppyId}
-      puppies={puppies}
-      setPuppies={setPuppies}
-      setPuppyForm={setPuppyForm}
-      RemovePuppy={removePuppyHandler}
-      editingPuppy={editingPuppy}
-      setEditingPuppy={setEditingPuppy}
-      cancel={() => {
-        setEditingPuppy(false);
-        setPuppyForm(false);
-      }}
-    />
-  ) : (
+  return (
+    //  puppyForm ? (
+    //   <PuppyForm
+    //     // newPuppyId={newPuppyId}
+    //     puppies={puppies}
+    //     setPuppies={setPuppies}
+    //     setPuppyForm={setPuppyForm}
+    //     RemovePuppy={removePuppyHandler}
+    //     editingPuppy={editingPuppy}
+    //     setEditingPuppy={setEditingPuppy}
+    //     cancel={() => {
+    //       setEditingPuppy(false);
+    //       setPuppyForm(false);
+    //     }}
+    //   />
+    // ) : (
     <div className="litter-form">
       {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -138,7 +141,7 @@ export default function LitterForm() {
             </div>
           </div>
         </div>
-        <table className="puppies">
+        {/* <table className="puppies">
           <thead>
             <tr>
               <th>id</th>
@@ -201,16 +204,16 @@ export default function LitterForm() {
                 )
               )}
           </tbody>
-        </table>
-        <button
+        </table> */}
+        {/* <button
           onClick={() => {
-            setNewPuppyId(newPuppyId + 1);
+            // setNewPuppyId(newPuppyId + 1);
             setPuppyForm(true);
           }}
         >
           Add Puppy
-        </button>
-        <input type="submit" value="Submit Litter" />
+        </button> */}
+        <input type="submit" value="Next" />
       </form>
       {/* <PuppyForm
         newPuppyId={newPuppyId}
@@ -240,10 +243,10 @@ export default function LitterForm() {
     }
     return "N/A";
   }
-  function editPuppyHandler(id) {
-    setEditingPuppy(puppies.find((puppy) => puppy.id === id));
-    setPuppyForm(true);
-  }
+  // function editPuppyHandler(id) {
+  // setEditingPuppy(puppies.find((puppy) => puppy.id === id));
+  // setPuppyForm(true);
+  // }
   function removePuppyHandler(id) {
     // todo shift id's of other puppies
     console.log("REMOVE", id);
@@ -255,4 +258,4 @@ export default function LitterForm() {
       [evt.target.name]: evt.target.value,
     });
   }
-}
+});

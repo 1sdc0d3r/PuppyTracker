@@ -1,17 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-export default function NewPuppy(props) {
-  // const {
-  //   newPuppyId,
-  //   puppies,
-  //   setPuppies,
-  //   setPuppyForm,
-  //   editingPuppy,
-  //   setEditingPuppy,
-  //   RemovePuppy,
-  //   cancel,
-  // } = props;
+import { withRouter } from "react-router-dom";
+//todo set required based of forms
+export default withRouter(function NewPuppy({ history, location }) {
+  const { litterId } = location.state;
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (puppyData) => {
     puppyData.commission = CommissionRate();
@@ -24,25 +16,7 @@ export default function NewPuppy(props) {
     // setEditingPuppy(false);
     // setPuppyForm(false);
   };
-  // const {
-  //   // id,
-  //   address,
-  //   akcRegistered,
-  //   commission,
-  //   fees,
-  //   firstName,
-  //   sex,
-  //   lastName,
-  //   listed,
-  //   markings,
-  //   microchipId,
-  //   name,
-  //   paymentType,
-  //   paymentValue,
-  //   phone,
-  //   price,
-  //   sellerPayment,
-  // } = editingPuppy;
+
   return (
     <form className="puppy-form" onSubmit={handleSubmit(onSubmit)}>
       {/* <p className="id">{id ? id : newPuppyId}</p> */}
@@ -241,4 +215,4 @@ export default function NewPuppy(props) {
       return price * 0.2;
     }
   }
-}
+});

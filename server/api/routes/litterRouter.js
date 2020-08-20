@@ -10,9 +10,7 @@ router.post("/", validateLitter, (req, res) => {
     litterDb
         .insert(litter)
         .then(([litter]) => {
-            res.status(201).json({
-                litter
-            });
+            res.status(201).json(litter)
         })
         .catch(({
                 name,
