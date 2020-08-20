@@ -7,9 +7,6 @@ const {
 
 router.post("/", validateLitter, (req, res) => {
     const litter = req.body;
-    console.log({
-        litter
-    })
     litterDb
         .insert(litter)
         .then(([litter]) => {

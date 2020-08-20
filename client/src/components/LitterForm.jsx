@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import PuppyForm from "./PuppyForm";
 import "../style/LitterForm/LitterForm.css";
+import { addLitter } from "../utils/serverRequests";
 //todo paw print as icon/on home page
 export default function LitterForm() {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (litterData) => {
-    litterData.puppies = puppies;
+    // litterData.puppies = puppies;
     // todo set date in correct format
     console.log("litter submit", litterData);
+    addLitter(litterData);
   };
   // todo # of puppies/litter
   const [puppies, setPuppies] = useState([
