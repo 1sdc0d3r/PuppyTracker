@@ -10,6 +10,7 @@ export default function LitterForm() {
     // todo set date in correct format
     console.log("litter submit", litterData);
   };
+  // todo # of puppies/litter
   const [puppies, setPuppies] = useState([
     {
       id: 1,

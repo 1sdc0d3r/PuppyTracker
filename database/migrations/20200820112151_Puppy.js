@@ -1,5 +1,5 @@
 exports.up = function (knex) {
-    knex.schema.createTable("Puppy", (tbl) => {
+    return knex.schema.createTable("Puppy", (tbl) => {
         tbl.increments("id").primary();
         tbl.integer("litter_id").notNullable().references("Litter.id")
         tbl.string("name").notNullable();
@@ -19,5 +19,5 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-    return knex.schema.dropTableIfExists("Puppy"),
+    return knex.schema.dropTableIfExists("Puppy")
 };
