@@ -1,11 +1,11 @@
 import axios from "axios";
 const api_url = "http://localhost:5000/api";
 
-export { addLitter };
+export { postLitter };
 
-function addLitter(litter) {
+function postLitter(litter) {
   axios
     .post(`${api_url}/litter`, litter)
-    .then((res) => console.log({ res }))
+    .then((res) => res)
     .catch((err) => console.log(err.response.data.message));
 }
