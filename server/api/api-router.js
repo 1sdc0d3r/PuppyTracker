@@ -4,6 +4,7 @@ const router = require("express").Router();
 // const authRouter = require("./routes/authRouter");
 const litterRouter = require("./routes/litterRouter")
 const puppyRouter = require("./routes/puppyRouter")
+const ownerRouter = require("./routes/ownerRouter")
 
 //* MIDDLEWARE
 // const restricted = require("./middleware/restricted");
@@ -11,6 +12,7 @@ const puppyRouter = require("./routes/puppyRouter")
 // router.use("/auth", authRouter);
 router.use("/litter", litterRouter)
 router.use("/puppy", puppyRouter)
+router.use("/owner", ownerRouter)
 
 router.use("/", (req, res) => {
   res.status(200).json({

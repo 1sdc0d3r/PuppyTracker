@@ -3,7 +3,7 @@ exports.up = function (knex) {
         tbl.increments("id").primary();
         tbl.integer("litter_id").notNullable()
         //todo .references("Litter.id")
-        tbl.string("name").notNullable();
+        tbl.string("name")
         tbl.integer("microchip").notNullable().unique();
         tbl.string("sex").notNullable();
         tbl.string("markings").notNullable();
