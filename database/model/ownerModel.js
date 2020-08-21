@@ -2,6 +2,7 @@ const db = require("../config")
 
 module.exports = {
     insert,
+    getOwners,
     getOwnerById,
     modifyOwner,
     removeOwner,
@@ -12,6 +13,10 @@ function insert(owner) {
     return db("Owner")
         .insert(owner)
         .returning("id");
+}
+
+function getOwners() {
+    return db("Owner").orderBy("first_name").orderBy("last_name")
 }
 
 function getOwnerById(id) {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "../style/LitterForm/LitterForm.css";
+import PuppyForm from "./PuppyForm";
+import OwnerForm from "./OwnerForm";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 const api_url = "http://localhost:5000/api";
@@ -10,68 +12,64 @@ export default withRouter(function LitterForm({ history }) {
   const onSubmit = (litterData) => {
     // todo set date in correct format
     console.log("litter submit", litterData);
-    axios
-      .post(`${api_url}/litter`, litterData)
-      .then((res) => history.push("/puppy", { litterId: res.data }))
-      .catch((err) => console.log(err.response.data.message));
+    const ownerName = litterData.owner.split(" ");
+    litterData.owner_id = owners.find(
+      (e) => e.first_name === ownerName[0] && e.last_name === ownerName[1]
+    ).id;
+    //   axios
+    //     .post(`${api_url}/litter`, litterData)
+    //     .then((res) => history.push("/puppy", { litterId: res.data }))
+    //     .catch((err) => console.log(err.response.data.message));
   };
   // todo # of puppies/litter
   // todo add in error messages (all at top?)
   const [puppies, setPuppies] = useState([]);
+  const [owners, setOwners] = useState([]);
   const [litterFormData, setLitterFormData] = useState({
     expectedDate: expectedDateHandler("breed_date", 63),
     newHomeDate: "",
   });
   useEffect(() => {
     const id = 1;
+    //todo DRY axios calls? chaining
     axios
       .get(`${api_url}/litter/${id}/puppies`)
       .then((res) => setPuppies(res.data))
       .catch((err) => console.log(err.response.data));
+    axios
+      .get(`${api_url}/owner`)
+      .then((res) => setOwners(res.data))
+      .catch((err) => console.log(err.response.data.message));
   }, []);
-
   return (
-    //  puppyForm ? (
-    //   <PuppyForm
-    //     // newPuppyId={newPuppyId}
-    //     puppies={puppies}
-    //     setPuppies={setPuppies}
-    //     setPuppyForm={setPuppyForm}
-    //     RemovePuppy={removePuppyHandler}
-    //     editingPuppy={editingPuppy}
-    //     setEditingPuppy={setEditingPuppy}
-    //     cancel={() => {
-    //       setEditingPuppy(false);
-    //       setPuppyForm(false);
-    //     }}
-    //   />
-    // ) : (
     <div className="litter-form">
-      {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="litter-info">
           <div className="row">
             <label>
-              <span className="required">*</span>Owner's Name:
+              <span className="required">*</span>Owner's Name:{" "}
               <input
-                name="ownerName"
+                name="owner"
                 placeholder="Owner's Name"
-                // onChange={handleFormChange}
-                // defaultValue={litterFormData.ownerName}
+                list="owners"
                 ref={register({ required: true })}
-                className={errors.ownerName ? "error" : null}
+                className={errors.owner ? "error" : null}
               />
+              <datalist id="owners">
+                {owners.map((e) => (
+                  <option key={e.id}>
+                    {e.first_name} {e.last_name}
+                  </option>
+                ))}
+              </datalist>
             </label>
             <label>
-              <span className="required">*</span>Dam:{" "}
-              {/* {errors.dam && {style={errorStyle}}} */}
+              <span className="required">*</span>Dam(F):{" "}
               <input
                 name="dam"
                 placeholder="Dam"
                 type="text"
                 list="dams"
-                // onChange={handleFormChange}
-                // defaultValue={litterFormData.dam}
                 ref={register({ required: true })}
                 className={errors.ownerName ? "error" : null}
               />
@@ -87,14 +85,12 @@ export default withRouter(function LitterForm({ history }) {
             </label>
             {/* {errors.sire && <span>this field is required:</span>} */}
             <label>
-              <span className="required">*</span>Sire:{" "}
+              <span className="required">*</span>Sire(M):{" "}
               <input
                 name="sire"
                 placeholder="Sire"
                 type="text"
                 list="sires"
-                // onChange={handleFormChange}
-                // defaultValue={litterFormData.sire}
                 ref={register({ required: true })}
                 className={errors.ownerName ? "error" : null}
               />
@@ -115,8 +111,6 @@ export default withRouter(function LitterForm({ history }) {
                 <input
                   name="breed_date"
                   type="date"
-                  // onChange={handleFormChange}
-                  // defaultValue={litterFormData.breed_date}
                   ref={register({ required: true })}
                   className={errors.ownerName ? "error" : null}
                 />
@@ -132,16 +126,15 @@ export default withRouter(function LitterForm({ history }) {
                 <input
                   name="litter_date"
                   type="date"
-                  // onChange={handleFormChange}
-                  // defaultValue={litterFormData.litter_date}
                   ref={register({ required: false })}
                 />
               </label>
               <p>New Home: {expectedDateHandler("litter_date", 56)}</p>
             </div>
           </div>
+          <p># of Puppies: {puppies.length}</p>
         </div>
-        {/* <table className="puppies">
+        <table className="puppies">
           <thead>
             <tr>
               <th>id</th>
@@ -149,7 +142,6 @@ export default withRouter(function LitterForm({ history }) {
               <th>sex</th>
               <th>markings</th>
               <th>Name</th>
-              <th>phone</th>
               <th>price</th>
               <th>paymentValue</th>
               <th>paymentType</th>
@@ -167,16 +159,12 @@ export default withRouter(function LitterForm({ history }) {
                 ({
                   id,
                   sex,
-                  address,
                   akcRegistered,
                   commission,
                   fees,
-                  firstName,
-                  lastName,
                   listed,
                   markings,
                   name,
-                  phone,
                   paymentType,
                   paymentValue,
                   price,
@@ -187,10 +175,6 @@ export default withRouter(function LitterForm({ history }) {
                     <td>{name}</td>
                     <td>{sex}</td>
                     <td>{markings}</td>
-                    <td>
-                      {firstName} {lastName}
-                    </td>
-                    <td>{phone}</td>
                     <td>{price}</td>
                     <td>{paymentValue}</td>
                     <td>{paymentType}</td>
@@ -199,12 +183,12 @@ export default withRouter(function LitterForm({ history }) {
                     <td>{commission}</td>
                     <td>{akcRegistered ? "Yes" : "No"}</td>
                     <td>{listed ? "Yes" : "No"}</td>
-                    <button onClick={() => editPuppyHandler(id)}>Edit</button>
+                    {/* <button onClick={() => editPuppyHandler(id)}>Edit</button> */}
                   </tr>
                 )
               )}
           </tbody>
-        </table> */}
+        </table>
         {/* <button
           onClick={() => {
             // setNewPuppyId(newPuppyId + 1);
@@ -215,19 +199,20 @@ export default withRouter(function LitterForm({ history }) {
         </button> */}
         <input type="submit" value="Next" />
       </form>
-      {/* <PuppyForm
-        newPuppyId={newPuppyId}
-        puppies={puppies}
-        setPuppies={setPuppies}
-        setPuppyForm={setPuppyForm}
-        RemovePuppy={removePuppyHandler}
-        editingPuppy={editingPuppy}
-        setEditingPuppy={setEditingPuppy}
-        cancel={() => {
-          setEditingPuppy(false);
-          setPuppyForm(false);
-        }}
-      /> */}
+      <PuppyForm
+      // newPuppyId={newPuppyId}
+      // puppies={puppies}
+      // setPuppies={setPuppies}
+      // setPuppyForm={setPuppyForm}
+      // RemovePuppy={removePuppyHandler}
+      // editingPuppy={editingPuppy}
+      // setEditingPuppy={setEditingPuppy}
+      // cancel={() => {
+      //   setEditingPuppy(false);
+      //   setPuppyForm(false);
+      // }}
+      />
+      <OwnerForm />
     </div>
   );
 

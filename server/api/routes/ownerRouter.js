@@ -28,6 +28,10 @@ router.post("/", validateOwner, (req, res) => {
 })
 
 
+router.get("/", (req, res) => {
+    ownerDb.getOwners().then(owners => res.status(201).json(owners)).catch(err => res.status(500).json(err))
+})
+
 router.get("/:id", (req, res) => {
     const id = req.params.id
     ownerDb.getOwnerById(id).then(owner => res.status(201).json(owner)).catch(err => res.status(500).json(err))

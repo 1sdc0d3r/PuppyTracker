@@ -1,7 +1,9 @@
 migration -> seed -> model -> server -> frontend
+GIT COMMITS OFTEN (show when in process)
 
 NAMING CONVENTIONS
 database Schema "entry_field"
+css "-"
 
 setup basic tbl.("types")
 create model

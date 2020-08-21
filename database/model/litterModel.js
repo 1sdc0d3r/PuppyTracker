@@ -5,6 +5,8 @@ module.exports = {
     getLitters,
     getLitterById,
     getPuppies,
+    getDam,
+    getSire,
     modifyLitter,
     removeLitter,
     truncate
@@ -36,6 +38,18 @@ function getPuppies(litter_id) {
         .where({
             litter_id
         }).orderBy("id")
+}
+
+function getDam(dam) {
+    return db("Litter").where({
+        dam
+    }).orderBy("id")
+}
+
+function getSire(sire) {
+    return db("Litter").where({
+        sire
+    }).orderBy("id")
 }
 
 function modifyLitter(id, litter) {

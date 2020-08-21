@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import { withRouter } from "react-router-dom";
 //todo set required based of forms
 export default withRouter(function NewPuppy({ history, location }) {
-  const { litterId } = location.state;
+  // const { litter_id } = location.state;
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (puppyData) => {
     puppyData.commission = CommissionRate();
-    puppyData.litterId = litterId;
+    // puppyData.litter_id = litter_id;
     // puppyData.id = editingPuppy ? editingPuppy.id : newPuppyId;
     // if (editingPuppy) {
     //   console.log("EDIT PUPPY");
@@ -28,7 +28,6 @@ export default withRouter(function NewPuppy({ history, location }) {
           name="name"
           placeholder="Puppy Name"
           type="text"
-          // defaultValue={name ? name : ""}
           ref={register()}
         />
       </label>
@@ -87,26 +86,6 @@ export default withRouter(function NewPuppy({ history, location }) {
             name="lastName"
             placeholder="Last Name"
             // defaultValue={lastName ? lastName : ""}
-            type="text"
-            ref={register({ required: false })}
-          />
-        </label>
-        <label>
-          Phone:{" "}
-          <input
-            name="phone"
-            placeholder="Phone #"
-            // defaultValue={phone ? phone : ""}
-            type="text"
-            ref={register({ required: false })}
-          />
-        </label>
-        <label>
-          Address: {/* //todo split this into further breakdown */}
-          <input
-            name="address"
-            placeholder="Address"
-            // defaultValue={address ? address : ""}
             type="text"
             ref={register({ required: false })}
           />
