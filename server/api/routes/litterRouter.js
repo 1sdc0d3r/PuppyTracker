@@ -2,7 +2,7 @@ const router = require("express").Router();
 const litterDb = require("../../../database/model/litterModel");
 const {
     validateLitter
-} = require("../middleware/authMiddleware")
+} = require("../middleware/validation")
 // CRUD
 
 router.post("/", validateLitter, (req, res) => {

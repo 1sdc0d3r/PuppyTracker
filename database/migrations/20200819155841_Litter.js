@@ -3,9 +3,9 @@
 exports.up = function (knex) {
     return knex.schema.createTable("Litter", (tbl) => {
         tbl.increments("id").primary();
-        tbl.integer("ownerId").notNullable();
-        tbl.date("breedDate").notNullable();
-        tbl.date("litterDate")
+        tbl.integer("owner_id").notNullable().references("Owner.id")
+        tbl.date("breed_date").notNullable();
+        tbl.date("litter_date")
         tbl.string("dam").notNullable();
         tbl.string("sire").notNullable();
     })

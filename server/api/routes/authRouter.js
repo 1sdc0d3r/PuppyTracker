@@ -9,7 +9,7 @@ const {
 
 const {
   validateHeaders,
-} = require("../middleware/authMiddleware");
+} = require("../middleware/authentication");
 
 router.post("/register", (req, res) => {
   let user = req.body;

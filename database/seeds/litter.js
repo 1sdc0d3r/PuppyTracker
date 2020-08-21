@@ -4,18 +4,22 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex("Litter").insert([{
-          id: 1,
-          ownerName: "Steve Bell",
-          breedDate: "2020-08-21",
-          litterDate: "2020-09-28",
+          owner_id: 1,
+          breed_date: "2020-08-21",
+          litter_date: "2020-09-28",
           dam: "Athena",
           sire: "Cowboy",
         },
         {
-          id: 2,
-          ownerName: "Steve Bell",
-          breedDate: "2020-10-17",
-          litterDate: "2020-11-28",
+          owner_id: 1,
+          breed_date: "2020-10-17",
+          dam: "Rose",
+          sire: "Rosco",
+        },
+        {
+          owner_id: 2,
+          breed_date: "2020-10-17",
+          litter_date: "2020-11-28",
           dam: "Rose",
           sire: "Rosco",
         },

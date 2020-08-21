@@ -19,7 +19,7 @@ export default withRouter(function LitterForm({ history }) {
   // todo add in error messages (all at top?)
   const [puppies, setPuppies] = useState([]);
   const [litterFormData, setLitterFormData] = useState({
-    expectedDate: expectedDateHandler("breedDate", 63),
+    expectedDate: expectedDateHandler("breed_date", 63),
     newHomeDate: "",
   });
   useEffect(() => {
@@ -107,37 +107,37 @@ export default withRouter(function LitterForm({ history }) {
             </label>
           </div>
           <div className="row">
-            {errors.litterDate && <span>this field is required:</span>}
+            {errors.litter_date && <span>this field is required:</span>}
             {/* //todo date format/validation MM/DD/YY  */}
             <div className="date">
               <label>
                 <span className="required">*</span>Breed Date:{" "}
                 <input
-                  name="breedDate"
+                  name="breed_date"
                   type="date"
                   // onChange={handleFormChange}
-                  // defaultValue={litterFormData.breedDate}
+                  // defaultValue={litterFormData.breed_date}
                   ref={register({ required: true })}
                   className={errors.ownerName ? "error" : null}
                 />
               </label>
               <p>
                 Expected Date:{" "}
-                {expectedDateHandler("breedDate", 63, "expectedDate")}
+                {expectedDateHandler("breed_date", 63, "expectedDate")}
               </p>
             </div>
             <div className="date">
               <label>
                 Litter Date:{" "}
                 <input
-                  name="litterDate"
+                  name="litter_date"
                   type="date"
                   // onChange={handleFormChange}
-                  // defaultValue={litterFormData.litterDate}
+                  // defaultValue={litterFormData.litter_date}
                   ref={register({ required: false })}
                 />
               </label>
-              <p>New Home: {expectedDateHandler("litterDate", 56)}</p>
+              <p>New Home: {expectedDateHandler("litter_date", 56)}</p>
             </div>
           </div>
         </div>
