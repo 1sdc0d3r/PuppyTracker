@@ -8,7 +8,6 @@ const api_url = "http://localhost:5000/api";
 export default withRouter(function LitterForm({ history }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (litterData) => {
-    // litterData.puppies = puppies;
     // todo set date in correct format
     console.log("litter submit", litterData);
     axios
@@ -17,11 +16,8 @@ export default withRouter(function LitterForm({ history }) {
       .catch((err) => console.log(err.response.data.message));
   };
   // todo # of puppies/litter
-  const [puppies, setPuppies] = useState([]);
-  // const [newPuppyId, setNewPuppyId] = useState(0);
-  // const [puppyForm, setPuppyForm] = useState(false);
-  // const [editingPuppy, setEditingPuppy] = useState(false);
   // todo add in error messages (all at top?)
+  const [puppies, setPuppies] = useState([]);
   const [litterFormData, setLitterFormData] = useState({
     expectedDate: expectedDateHandler("breedDate", 63),
     newHomeDate: "",
@@ -56,26 +52,28 @@ export default withRouter(function LitterForm({ history }) {
         <div className="litter-info">
           <div className="row">
             <label>
-              Owner's Name:{" "}
+              <span className="required">*</span>Owner's Name:
               <input
                 name="ownerName"
                 placeholder="Owner's Name"
-                onChange={handleFormChange}
-                defaultValue={litterFormData.ownerName}
-                ref={register}
+                // onChange={handleFormChange}
+                // defaultValue={litterFormData.ownerName}
+                ref={register({ required: true })}
+                className={errors.ownerName ? "error" : null}
               />
             </label>
-            {errors.dam && <span>this field is required:</span>}
             <label>
-              Dam:{" "}
+              <span className="required">*</span>Dam:{" "}
+              {/* {errors.dam && {style={errorStyle}}} */}
               <input
                 name="dam"
                 placeholder="Dam"
                 type="text"
                 list="dams"
-                onChange={handleFormChange}
-                defaultValue={litterFormData.dam}
-                ref={register({ required: false })}
+                // onChange={handleFormChange}
+                // defaultValue={litterFormData.dam}
+                ref={register({ required: true })}
+                className={errors.ownerName ? "error" : null}
               />
               {
                 //todo datalist populate from past entries
@@ -87,17 +85,18 @@ export default withRouter(function LitterForm({ history }) {
                 <option>Darby</option>
               </datalist>
             </label>
-            {errors.sire && <span>this field is required:</span>}
+            {/* {errors.sire && <span>this field is required:</span>} */}
             <label>
-              Sire:{" "}
+              <span className="required">*</span>Sire:{" "}
               <input
                 name="sire"
                 placeholder="Sire"
                 type="text"
                 list="sires"
-                onChange={handleFormChange}
-                defaultValue={litterFormData.sire}
-                ref={register({ required: false })}
+                // onChange={handleFormChange}
+                // defaultValue={litterFormData.sire}
+                ref={register({ required: true })}
+                className={errors.ownerName ? "error" : null}
               />
               <datalist id="sires">
                 <option>Rodeo</option>
@@ -112,13 +111,14 @@ export default withRouter(function LitterForm({ history }) {
             {/* //todo date format/validation MM/DD/YY  */}
             <div className="date">
               <label>
-                Breed Date:{" "}
+                <span className="required">*</span>Breed Date:{" "}
                 <input
                   name="breedDate"
                   type="date"
-                  onChange={handleFormChange}
-                  defaultValue={litterFormData.breedDate}
-                  ref={register({ required: false })}
+                  // onChange={handleFormChange}
+                  // defaultValue={litterFormData.breedDate}
+                  ref={register({ required: true })}
+                  className={errors.ownerName ? "error" : null}
                 />
               </label>
               <p>
@@ -132,8 +132,8 @@ export default withRouter(function LitterForm({ history }) {
                 <input
                   name="litterDate"
                   type="date"
-                  onChange={handleFormChange}
-                  defaultValue={litterFormData.litterDate}
+                  // onChange={handleFormChange}
+                  // defaultValue={litterFormData.litterDate}
                   ref={register({ required: false })}
                 />
               </label>

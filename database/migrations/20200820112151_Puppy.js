@@ -6,10 +6,6 @@ exports.up = function (knex) {
         tbl.integer("microchip").notNullable().unique();
         tbl.string("sex").notNullable();
         tbl.string("markings").notNullable();
-        tbl.string("first_name").notNullable();
-        tbl.string("last_name").notNullable();
-        tbl.integer("phone").notNullable();
-        tbl.string("address").notNullable();
         tbl.integer("price").notNullable();
         tbl.integer("fees").notNullable();
         tbl.integer("commission").notNullable();

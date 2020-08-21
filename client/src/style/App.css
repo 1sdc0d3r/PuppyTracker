@@ -1,4 +1,12 @@
 .App {
   text-align: center;
 }
+
+.App form .required {
+  color: #ff0033;
+}
+
+.App form .error {
+  border: 1px solid #ff0033;
+}
 /*# sourceMappingURL=App.css.map */

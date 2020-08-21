@@ -3,5 +3,11 @@
   form {
     // display: flex;
     // flex-direction: column;
+    .required {
+      color: #ff0033;
+    }
+    .error {
+      border: 1px solid #ff0033;
+    }
   }
 }
