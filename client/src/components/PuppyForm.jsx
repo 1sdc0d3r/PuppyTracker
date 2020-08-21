@@ -7,6 +7,7 @@ export default withRouter(function NewPuppy({ history, location }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = (puppyData) => {
     puppyData.commission = CommissionRate();
+    puppyData.litterId = litterId;
     // puppyData.id = editingPuppy ? editingPuppy.id : newPuppyId;
     // if (editingPuppy) {
     //   console.log("EDIT PUPPY");
