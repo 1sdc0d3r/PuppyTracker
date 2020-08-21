@@ -1,14 +1,15 @@
 exports.up = function (knex) {
     return knex.schema.createTable("Puppy", (tbl) => {
         tbl.increments("id").primary();
-        tbl.integer("litter_id").notNullable().references("Litter.id")
+        tbl.integer("litter_id").notNullable()
+        //todo .references("Litter.id")
         tbl.string("name").notNullable();
         tbl.integer("microchip").notNullable().unique();
         tbl.string("sex").notNullable();
         tbl.string("markings").notNullable();
-        tbl.integer("price").notNullable();
-        tbl.integer("fees").notNullable();
-        tbl.integer("commission").notNullable();
+        tbl.integer("price")
+        tbl.integer("fees")
+        tbl.integer("commission")
         tbl.boolean("akc_registered").notNullable();
         tbl.boolean("listed").notNullable();
     })

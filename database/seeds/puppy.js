@@ -4,28 +4,20 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex("Puppy").insert([{
-          id: 1,
           litter_id: 1,
           name: "Red",
           microchip: 123456,
           sex: "M",
           markings: "cream, chocolate",
-          price: 100,
-          fees: 20,
-          commission: 10,
           akc_registered: false,
           listed: true,
         },
         {
-          id: 2,
           litter_id: 1,
           name: "Orange",
           microchip: 1234321,
           sex: "M",
           markings: "dapple, chocolate",
-          price: 120,
-          fees: 25,
-          commission: 12,
           akc_registered: true,
           listed: false,
         },
